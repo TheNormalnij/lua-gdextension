@@ -74,7 +74,7 @@ if env["platform"] == "ios":
     )
 
     tree_sitter = env.StaticLibrary(
-        f"addons/lua-gdextension/build/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}",
+        f"{build_dir}/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}",
         source=[
             "lib/tree-sitter/lib/src/lib.c",
             "lib/tree-sitter-lua/src/parser.c",
@@ -83,10 +83,10 @@ if env["platform"] == "ios":
     )
 
     treesitter_xcframework = env.XCFramework(
-        f"{build_dir}/libluagdextension{env["suffix"]}.xcframework",
+        f"addons/lua-gdextension/libtreesitter{env["suffix"]}.xcframework",
         [
-            f"addons/lua-gdextension/build/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}",
-            *map(str, Glob(f"addons/lua-gdextension/build/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}")),
+            f"{build_dir}/libluagdextension{env["suffix"]}{env["LIBSUFFIX"]}",
+            *map(str, Glob(f"{build_dir}/libluagdextension{env["suffix"]}{env["LIBSUFFIX"]}")),
         ],
     )
 
