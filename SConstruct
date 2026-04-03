@@ -1,6 +1,5 @@
 import os
 
-
 # Lua GDExtension specific command line options
 # These should be dealt with before initializing godot-cpp, to avoid unknown options warnings
 lua_runtime = ARGUMENTS.pop("lua_runtime", "lua")
@@ -73,6 +72,18 @@ if env["platform"] == "ios":
         f"{build_dir}/libluagdextension{env["suffix"]}{env["LIBSUFFIX"]}",
         source=sources,
     )
+
+    tree_sitter = env.StaticLibrary(
+        f"addons/lua-gdextension/build/libtreesitter{env["suffix"]}{env["SHLIBSUFFIX"]}",
+        source=[
+            "lib/tree-sitter/lib/src/lib.c",
+            "lib/tree-sitter-lua/src/parser.c",
+            "lib/tree-sitter-lua/src/scanner.c",
+        ]
+    )
+
+    env.Depends(library, tree_sitter)
+
     godotcpp_xcframework = env.XCFramework(
         f"addons/lua-gdextension/build/libgodot-cpp{env["suffix"]}.xcframework",
         [
