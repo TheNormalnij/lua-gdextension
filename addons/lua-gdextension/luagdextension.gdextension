@@ -38,10 +38,8 @@ LuaScript = "LuaScript_icon.svg"
 
 [dependencies]
 ios.debug = {
-  "build/libgodot-cpp.ios.template_debug.universal.xcframework": "",
-  "build/libtreesitter.ios.template_debug.universal.xcframework": ""
+  "build/libgodot-cpp.ios.template_debug.universal.xcframework": ""
 }
 ios.release = {
-  "build/libgodot-cpp.ios.template_release.universal.xcframework": "",
-  "build/libtreesitter.ios.template_release.universal.xcframework": ""
+  "build/libgodot-cpp.ios.template_release.universal.xcframework": ""
 }

@@ -68,26 +68,15 @@ if env["target"] in ["editor", "template_debug"]:
     sources.append(doc_data)
 
 if env["platform"] == "ios":
+    sources.extend([
+        "lib/tree-sitter/lib/src/lib.c",
+        "lib/tree-sitter-lua/src/parser.c",
+        "lib/tree-sitter-lua/src/scanner.c",
+    ])
+
     library = env.StaticLibrary(
         f"{build_dir}/libluagdextension{env["suffix"]}{env["LIBSUFFIX"]}",
         source=sources,
-    )
-
-    tree_sitter = env.StaticLibrary(
-        f"{build_dir}/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}",
-        source=[
-            "lib/tree-sitter/lib/src/lib.c",
-            "lib/tree-sitter-lua/src/parser.c",
-            "lib/tree-sitter-lua/src/scanner.c",
-        ]
-    )
-
-    treesitter_xcframework = env.XCFramework(
-        f"addons/lua-gdextension/build/libtreesitter{env["suffix"]}.xcframework",
-        [
-            f"{build_dir}/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}",
-            *map(str, Glob(f"{build_dir}/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}")),
-        ],
     )
 
     godotcpp_xcframework = env.XCFramework(
@@ -105,9 +94,7 @@ if env["platform"] == "ios":
         ],
     )
     env.Depends(godotcpp_xcframework, library)
-    env.Depends(treesitter_xcframework, tree_sitter)
     env.Depends(luagdextension_xcframework, godotcpp_xcframework)
-    env.Depends(luagdextension_xcframework, treesitter_xcframework)
     Default(luagdextension_xcframework)
 else:
     library = env.SharedLibrary(
