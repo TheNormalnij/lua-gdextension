@@ -85,8 +85,8 @@ if env["platform"] == "ios":
     treesitter_xcframework = env.XCFramework(
         f"addons/lua-gdextension/build/libtreesitter{env["suffix"]}.xcframework",
         [
-            f"{build_dir}/libluagdextension{env["suffix"]}{env["LIBSUFFIX"]}",
-            *map(str, Glob(f"{build_dir}/libluagdextension{env["suffix"]}{env["LIBSUFFIX"]}")),
+            f"{build_dir}/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}",
+            *map(str, Glob(f"{build_dir}/libtreesitter{env["suffix"]}{env["LIBSUFFIX"]}")),
         ],
     )
 
